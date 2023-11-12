@@ -150,12 +150,67 @@ switch($today){
         break;
     default:
         echo "<p class='text-secondary'>If you seeing this message, something went wrong :)</p>";
-    
-
-
 };
 ?>
 
+<hr>
+<!-- --------------------------------------- -->
+<h1>Conditional Operator (Ternary operator)</h1>
+<!-- --------------------------------------- -->
+<?php
+$session = "John";
+$user = ($session == "John")? $session : "not logged in";
+echo $user.'<br>';
+
+function confirm(){
+   echo "affirmative";
+}
+function deny(){
+   echo "negative";
+}
+//is 10 bigger than 5?
+(10 > 5) ? confirm() : deny();
+?>
+
+<hr>
+<!-- ------------------------------------------- -->
+<h1>Shorthand Ternary Operator (Elvis operator)</h1>
+<!-- ------------------------------------------- -->
+<?php
+$varOne = 4 > 3;
+$varTwo = 4 < 3;
+$varThree = null;
+
+echo ($varOne ?: "The condition was false or null") ."<br>";
+//returns 1 (true)
+
+echo ($varTwo ?: "The condition was false or null") ."<br>";
+// returns "The condition was false or null"
+
+echo ($varThree ?: "The condition was false or null") ."<br>";
+// returns "The condition was false or null"
+
+// Throws an error because the condition doesn't exist and shows the second result. Uncomment to see:
+// echo ($varFour ?: "The condition was false or null") ."<br>";
+
+//To check if the condition exists use @ or isset().
+echo (@$varFour ?: "The condition doesn't exist") ."<br>";
+
+//same as:
+//echo (isset($varFour) ?: "The condition doesn't exist");
+?>
+
+<hr>
+<!-- ------------------------ -->
+<h1>Null Coalescing Operator</h1>
+<!-- ------------------------ -->
+<?php
+$var1 = 42;
+$var2 = null;
+
+echo ($var1 ?? "The condition doesn't exist or is null") ."<br>";
+//returns 42 (value of $var1)
+?>
        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
    </body>
 </html>
