@@ -1,3 +1,28 @@
+<?php
+require_once 'db_connect.php';
+require_once 'file_upload.php';
+
+if (isset($_POST['create'])) {
+  $name = $_POST['name'];
+  $price = $_POST['price'];
+  $picture = fileUpload($_FILES["picture"]);
+
+  $sql = "INSERT INTO `products`(`name`, `price`, `picture`) VALUES (`$name`, `$price`, `{$picture[0]}`)";
+
+  if (mysqli_query($connect, $sql)) {
+    echo "<div class='alert alert-success' role='alert'>
+           New record has been created, {$picture[1]}
+         </div>";
+    header("refresh: 3; url= index.php");
+  } else {
+    echo "<div class='alert alert-danger' role='alert'>
+           error found, {$picture[1]}
+         </div>";
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 
