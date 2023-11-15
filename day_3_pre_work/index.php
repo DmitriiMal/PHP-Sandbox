@@ -6,27 +6,20 @@ $sql = "SELECT * FROM products";
 // fetch_all()
 $result = mysqli_query($connect, $sql);
 
-// OOP way:
-// $rows = $result->fetch_all(MYSQLI_ASSOC);
-
 // Procedural way:
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-foreach ($rows as $row) {
-  echo  "<p>" . $row['name'] . " " . $row['price'] . "</p>";
-}
-
-// echo "<pre>";
-// echo var_dump($result);
-// echo "</pre>";
+// foreach ($rows as $row) {
+//   echo  "<p>" . $row['name'] . " " . $row['price'] . "</p>";
+// }
 
 // fetch_array()
-$result2 = mysqli_query($connect, $sql);
+// $result2 = mysqli_query($connect, $sql);
 
-while ($row  = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+// while ($row  = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
 
-  echo  "<p>{$row['name']} {$row['price']}</p>";
-}
+//   echo  "<p>{$row['name']} {$row['price']}</p>";
+// }
 
 
 // fetch_assoc()
@@ -65,9 +58,9 @@ mysqli_close($connect);
 
 <body>
   <div class="container my-5">
-    <a class="btn btn-outline-secondary" href="create.php">Create a product</a>
+    <a class="btn btn-light" href="create.php">Create a product</a>
 
-    <h1 class="my-3">Products List</h1>
+    <h1 class="my-5">Products List</h1>
     <div class="row row-cols-xs-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3">
 
       <?= $cards ?>
