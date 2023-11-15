@@ -6,7 +6,7 @@ $password = ""; // by default there is no password in the databases
 $dbname = "crud_example"; // here we need to write the Database name
 
 // create connection, you need to be aware of the order of the parameters
-$connect = new mysqli($hostname, $username, $password, $dbname);
+$connect = mysqli_connect($hostname, $username, $password, $dbname);
 
 // check connection
 if (!$connect) {

@@ -1,47 +1,28 @@
-<?php require_once('db_connect.php');
+<?php
+require_once "db_connect.php";
 
 $sql = "SELECT * FROM products";
 
-
-// fetch_all()
 $result = mysqli_query($connect, $sql);
-
-// Procedural way:
-$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-// foreach ($rows as $row) {
-//   echo  "<p>" . $row['name'] . " " . $row['price'] . "</p>";
-// }
-
-// fetch_array()
-// $result2 = mysqli_query($connect, $sql);
-
-// while ($row  = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-
-//   echo  "<p>{$row['name']} {$row['price']}</p>";
-// }
-
-
-// fetch_assoc()
-$result3 = mysqli_query($connect, $sql);
 
 $cards = "";
 
 if (mysqli_num_rows($result) > 0) {
-  while ($row = mysqli_fetch_assoc($result3)) {
-    $cards  .= "<div>
-              <div class='card'>
-                  <img src='pictures/{$row["picture"]}'  class='card-img-top'  alt='...' >
-                  <div class= 'card-body' >
-                  <h5 class='card-title' >{$row["name"]}</h5>
-                  <p class='card-text' >{$row["price"]}</p>
-                  <a href='#' class='btn btn-light'>Go somewhere</a>
+  while ($row = mysqli_fetch_assoc($result)) {
+    $cards  .= "<div class='my-2'>
+                  <div class='card'>
+                      <img src='pictures/{$row["picture"]}' class='card-img-top'  alt='...' >
+                      <div class= 'card-body'>
+                      <h5 class='card-title'>{$row["name"]}</h5>
+                      <p class='card-text'>{$row["price"]}</p>
+                      <a href='update.php?id={$row['id']}' class='btn btn-light me-2'>Update</a>
+                      <a href='delete.php?id={$row["id"]}' class='btn btn-outline-danger'>Delete</a>
+                  </div>
               </div>
-          </div>
-        </div> ";
+            </div> ";
   }
 } else {
-  $cards =  " <p> No results found </p> ";
+  $cards = "<p No results found</p>";
 }
 
 mysqli_close($connect);
@@ -57,12 +38,12 @@ mysqli_close($connect);
 </head>
 
 <body>
-  <div class="container my-5">
-    <a class="btn btn-light" href="create.php">Create a product</a>
+  <?php require_once "navbar.php" ?>
+  <div class="container m-100px py-4">
+    <!-- <a class="btn btn-light" href="create.php">Create a product</a> -->
 
-    <h1 class="my-5">Products List</h1>
-    <div class="row row-cols-xs-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3">
-
+    <h1 class="my-4">Products List</h1>
+    <div class="row row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
       <?= $cards ?>
 
     </div>
