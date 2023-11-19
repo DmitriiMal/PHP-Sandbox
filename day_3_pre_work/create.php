@@ -11,7 +11,7 @@ if (isset($_POST["create"])) {
 
   if (mysqli_query($connect, $sql)) {
     echo "<div class='alert alert-success' role='alert'>
-           New record has been created, {$picture[1]}
+           New record has been created, {$picture[0]}
          </div>";
     header("refresh: 3; url= index.php");
   } else {
