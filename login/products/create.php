@@ -1,13 +1,31 @@
 <?php
-require_once "db_connect.php";
-require_once "file_upload.php";
+session_start();
+
+if (!isset($_SESSION["user"]) && !isset($_SESSION["adm"])) { // if the session user and the session adm have no value
+  header("Location: ../login.php"); // redirect the user to the home page
+}
+
+if (isset($_SESSION["user"])) { // if a session "user" is exist and have a value
+  header("Location: home.php"); // redirect the user to the user page
+}
+
+require_once "../db_connect.php";
+require_once "../file_upload.php";
+
+$result = mysqli_query($connect, "SELECT * FROM suppliers");
+$options = "";
+while ($row = mysqli_fetch_assoc($result)) {
+  $options .= "<option value='{$row["supplierId"]}'>{$row["sup_name"]}</option>";
+}
 
 if (isset($_POST["create"])) {
   $name = $_POST["name"];
   $price = $_POST["price"];
-  $picture = fileUpload($_FILES["picture"]);
+  $supplier = isset($_POST["supplier"]) ? $_POST["supplier"] : null;
 
-  $sql = "INSERT INTO products (name, price, picture) VALUES ('$name',$price,'{$picture[0]}')";
+  $picture = fileUpload($_FILES["picture"], "product");
+
+  $sql = "INSERT INTO products (name, price, picture, fk_supplierId) VALUES ('$name',$price,'{$picture[0]}', $supplier)";
 
   if (mysqli_query($connect, $sql)) {
     echo "<div class='alert alert-success' role='alert'>
@@ -47,6 +65,13 @@ if (isset($_POST["create"])) {
       <div class="mb-3">
         <label for="price" class="form-label">Price</label>
         <input type="number" class="form-control" id="price" aria-describedby="price" name="price">
+      </div>
+      <div class="mb-3">
+        <label for="supplier" class="form-label">Supplier</label>
+        <select name="supplier" class="form-control" id="supplier">
+          <option selected value="null">Undefined</option>
+          <?= $options ?>
+        </select>
       </div>
       <div class="mb-3">
         <label for="picture" class="form-label">Picture</label>

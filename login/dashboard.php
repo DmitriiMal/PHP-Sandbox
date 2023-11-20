@@ -67,6 +67,9 @@ mysqli_close($connect);
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="products/index.php">Products</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="update.php?id=<?= $row["id"] ?> ">edit</a>
         </li>
         <li class="nav-item">

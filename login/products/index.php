@@ -1,5 +1,16 @@
 <?php
-require_once "db_connect.php";
+session_start();
+
+if (!isset($_SESSION["user"]) && !isset($_SESSION["adm"])) { // if the session user and the session adm have no value
+  header("Location: ../login.php"); // redirect the user to the home page
+}
+
+if (isset($_SESSION["user"])) { // if a session "user" is exist and have a value
+  header("Location: home.php"); // redirect the user to the user page
+}
+
+require_once "../db_connect.php";
+
 
 $sql = "SELECT * FROM products";
 
@@ -11,7 +22,7 @@ if (mysqli_num_rows($result) > 0) {
   while ($row = mysqli_fetch_assoc($result)) {
     $cards  .= "<div class='my-2'>
                   <div class='card'>
-                      <img src='pictures/{$row["picture"]}' class='card-img-top'  alt='...' >
+                      <img src='../pictures/{$row["picture"]}' class='card-img-top'  alt='...' >
                       <div class= 'card-body'>
                       <h5 class='card-title'>{$row["name"]}</h5>
                       <p class='card-text'>{$row["price"]}</p>

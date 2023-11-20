@@ -1,25 +1,47 @@
 <?php
-require_once "db_connect.php";
-require_once "file_upload.php";
+session_start();
+
+if (!isset($_SESSION["user"]) && !isset($_SESSION["adm"])) { // if the session user and the session adm have no value
+  header("Location: ../login.php"); // redirect the user to the home page
+}
+
+if (isset($_SESSION["user"])) { // if a session "user" is exist and have a value
+  header("Location: home.php"); // redirect the user to the user page
+}
+
+require_once "../db_connect.php";
+require_once "../file_upload.php";
+
 
 $id = $_GET["id"];
 $sql = "SELECT * FROM products WHERE id=$id";
 $result = mysqli_query($connect, $sql);
 $row = mysqli_fetch_assoc($result);
 
+$resultSuppliers = mysqli_query($connect, "SELECT * FROM suppliers");
+$options = "";
+while ($rowSupplier = mysqli_fetch_assoc($resultSuppliers)) {
+  if ($row["fk_supplierId"] == $rowSupplier["supplierId"]) {
+    $options .= "<option selected value='{$rowSupplier["supplierId"]}'>{$rowSupplier["sup_name"]}</option>";
+  } else {
+    $options .= "<option value='{$rowSupplier["supplierId"]}'>{$rowSupplier["sup_name"]}</option>";
+  }
+}
+
 if (isset($_POST["update"])) {
   $name = $_POST["name"];
   $price = $_POST["price"];
-  $picture = fileUpload($_FILES["picture"]);
+  $picture = fileUpload($_FILES["picture"], "product");
+  $supplier = isset($_POST["supplier"]) ? $_POST["supplier"] : null;
 
   if ($_FILES["picture"]["error"] == 0) {
 
     if ($row["picture"] != "product.png") {
-      unlink("pictures/$row[picture]");
+      unlink("../pictures/$row[picture]");
     }
-    $sql = "UPDATE products SET name = '$name', price = $price, picture = '$picture[0]' WHERE id = {$id}";
+    $sql = "UPDATE products SET name = '$name', price = $price, picture = '$picture[0], fk_supplierId = $supplier' WHERE id = {$id}";
   } else {
-    $sql = "UPDATE products SET name = '$name', price = $price WHERE id = {$id}";
+    $sql = "UPDATE products SET name = '$name', price = $price, fk_supplierId = $supplier WHERE id = {$id}";
   }
 
   if (mysqli_query($connect, $sql)) {
@@ -61,6 +83,12 @@ mysqli_close($connect);
       <div class="mb-3">
         <label for="price" class="form-label">price</label>
         <input type="number" class="form-control" id="price" aria-describedby="price" name="price" value="<?= $row["price"] ?>">
+      </div>
+      <div class="mb-3">
+        <label for="supplier" class="form-label">Supplier</label>
+        <select name="supplier" class="form-control" id="supplier">
+          <?= $options ?>
+        </select>
       </div>
       <div class="mb-3">
         <label for="picture" class="form-label">picture</label>
