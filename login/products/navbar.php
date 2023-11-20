@@ -14,12 +14,15 @@
   <nav>
     <input id="nav-toggle" type="checkbox" />
     <div class="logo">
-      <a href="index.php"><strong>
+      <img src="pictures/<?= $row["picture"] ?>" alt="user pic" width="30" height="30">
+      <a href="/login/products/index.php"><strong>
           PHP CRUD</strong></a>
     </div>
     <ul class="links">
-      <li><a href="index.php">Home</a></li>
-      <li><a href="create.php">Create</a></li>
+      <li><a href="/login/products/index.php">Products</a></li>
+      <li><a href="/login/products/create.php">Create</a></li>
+      <li><a href="/login/update.php?id=<?= $row["id"] ?> ">edit</a></li>
+      <li><a href="/login/logout.php?logout">Logout</a></li>
     </ul>
     <label for="nav-toggle" class="icon-burger">
       <div class="line"></div>

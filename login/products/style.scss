@@ -55,8 +55,8 @@ nav .links li {
 
   & a {
     display: block;
-    padding: 0.6rem 1rem;
-    margin: 0.5rem 20px;
+    padding: 0.6rem 0.7rem;
+    margin: 0.5rem 5px;
     font-size: 16px;
     font-weight: bold;
     color: black;
@@ -131,7 +131,7 @@ nav .icon-burger .line {
     font-size: 20px;
   }
   nav :checked ~ .links {
-    bottom: 65%;
+    bottom: 20%;
   }
   nav .icon-burger {
     display: block;
